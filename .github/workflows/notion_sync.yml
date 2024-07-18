@@ -1,14 +1,13 @@
-name: Notion Commits Sync
+name: Notion Issues Sync
 
 on:
-  push:
-    branches:
-      - main
+  issues:
+    types: [opened, edited]  # Trigger on new issues or edits to existing issues
 
 jobs:
-  notion_commits_job:
+  notion_issues_job:
     runs-on: ubuntu-latest
-    name: Add GitHub Commits to Notion
+    name: Add GitHub Issues to Notion
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -23,14 +22,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Fetch commit data and update Notion
+      - name: Fetch issue data and update Notion
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_COMMITS_DATABASE: ${{ secrets.NOTION_COMMITS_DATABASE }}
+          NOTION_ISSUES_DATABASE: ${{ secrets.NOTION_ISSUES_DATABASE }}
         run: |
-          python update_notion_commits.py
-
-
-
-       
+          python update_notion_issues.py
