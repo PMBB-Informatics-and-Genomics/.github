@@ -8,6 +8,7 @@ NOTION_ISSUES_DATABASE = os.getenv('NOTION_ISSUES_DATABASE')
 REPO_OWNER = 'PMBB-Informatics-and-Genomics'
 REPO_NAME = '.github'  # Update with your repository name
 
+
 github_headers = {
     "Authorization": f"token {GITHUB_TOKEN}",
     "Accept": "application/vnd.github.v3+json"
@@ -103,6 +104,20 @@ def post_to_notion(issue):
                         }
                     }
                 ]
+            },
+            "Body": {
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": issue['body'] if issue['body'] else "No description provided"
+                        }
+                    }
+                ]
+            },
+            "Status": {
+                "select": {
+                    "name": issue['state']  # Assuming GitHub issue state ('open' or 'closed') matches status options
+                }
             }
         }
     }
