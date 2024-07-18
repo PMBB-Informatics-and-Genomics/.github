@@ -4,7 +4,7 @@ import requests
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 NOTION_COMMITS_DATABASE = os.getenv('NOTION_COMMITS_DATABASE')
-REPO_OWNER = 'Verma-Lab'
+REPO_OWNER = 'PMBB-Informatics-and-Genomics'
 REPO_NAME = '.github'  # Update this to your repository name
 
 github_headers = {
