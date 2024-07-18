@@ -1,0 +1,32 @@
+name: Notion Commits Sync
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notion_commits_job:
+    runs-on: ubuntu-latest
+    name: Add GitHub Commits to Notion
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Fetch commit data and update Notion
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_COMMITS_DATABASE: ${{ secrets.NOTION_COMMITS_DATABASE }}
+        run: |
+          python update_notion_commits.py
