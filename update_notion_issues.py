@@ -34,7 +34,7 @@ def post_to_notion(issue):
         "parent": { "database_id": NOTION_ISSUES_DATABASE },
         "properties": {
             "Organization": {
-                "rich_text": [
+                "title": [
                     {
                         "text": {
                             "content": REPO_OWNER
@@ -43,22 +43,14 @@ def post_to_notion(issue):
                 ]
             },
             "Repository": {
-                "rich_text": [
+                "multi_select": [
                     {
-                        "text": {
-                            "content": REPO_NAME
-                        }
+                        "name": REPO_NAME
                     }
                 ]
             },
             "Number": {
-                "title": [
-                    {
-                        "text": {
-                            "content": str(issue['number'])
-                        }
-                    }
-                ]
+                "number": issue['number']
             },
             "Author": {
                 "rich_text": [
@@ -70,26 +62,38 @@ def post_to_notion(issue):
                 ]
             },
             "Created": {
-                "date": {
-                    "start": created_date
-                }
-            },
-            "Updated": {
-                "date": {
-                    "start": updated_date
-                }
-            },
-            "ID": {
                 "rich_text": [
                     {
                         "text": {
-                            "content": str(issue['id'])
+                            "content": created_date
                         }
                     }
                 ]
             },
+            "Updated": {
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": updated_date
+                        }
+                    }
+                ]
+            },
+            "ID": {
+                "multi_select": [
+                    {
+                        "name": str(issue['id'])
+                    }
+                ]
+            },
             "Link": {
-                "url": issue['html_url']
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": issue['html_url']
+                        }
+                    }
+                ]
             },
             "Repo": {
                 "rich_text": [
