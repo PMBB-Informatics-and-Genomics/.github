@@ -6,7 +6,7 @@ GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 NOTION_ISSUES_DATABASE = os.getenv('NOTION_ISSUES_DATABASE')
 REPO_OWNER = 'PMBB-Informatics-and-Genomics'
-REPO_NAME = '.github'  # Update with your repository name
+REPO_NAME = 'geno_pheno_workbench'
 
 github_headers = {
     "Authorization": f"token {GITHUB_TOKEN}",
