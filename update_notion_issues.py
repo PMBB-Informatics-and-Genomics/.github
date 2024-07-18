@@ -5,8 +5,8 @@ from datetime import datetime
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 NOTION_ISSUES_DATABASE = os.getenv('NOTION_ISSUES_DATABASE')
-REPO_OWNER = 'YourOrg'
-REPO_NAME = 'YourRepo'  # Update with your repository name
+REPO_OWNER = 'PMBB-Informatics-and-Genomics'
+REPO_NAME = '.github'  # Update with your repository name
 
 github_headers = {
     "Authorization": f"token {GITHUB_TOKEN}",
