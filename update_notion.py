@@ -57,16 +57,38 @@ def post_to_notion(stats, files):
                 ]
             },
             "Stars": {
-                "number": stats['stargazers_count']
+                "multi_select": [
+                    {
+                        "name": str(stats['stargazers_count'])
+                    }
+                ]
             },
             "Forks": {
-                "number": stats['forks_count']
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": str(stats['forks_count'])
+                        }
+                    }
+                ]
             },
             "Open Issues": {
-                "number": stats['open_issues_count']
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": str(stats['open_issues_count'])
+                        }
+                    }
+                ]
             },
             "Size (MB)": {
-                "number": stats['size'] / 1024  # Size in MB
+                "rich_text": [
+                    {
+                        "text": {
+                            "content": f"{stats['size'] / 1024:.2f} MB"
+                        }
+                    }
+                ]
             },
             "File Details": {
                 "rich_text": [
@@ -100,6 +122,7 @@ def post_to_notion(stats, files):
     
     response.raise_for_status()
     return response.json()
+
 
 repo_stats = fetch_repo_stats()
 repo_contents = fetch_repo_contents()
