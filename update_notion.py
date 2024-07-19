@@ -89,7 +89,15 @@ def post_to_notion(stats, files):
         }
     }
     
+    # Debug: Print the payload
+    print(f"Payload: {data}")
+    
     response = requests.post(url, headers=notion_headers, json=data)
+    
+    # Debug: Print response details
+    print(f"Response Status Code: {response.status_code}")
+    print(f"Response Text: {response.text}")
+    
     response.raise_for_status()
     return response.json()
 
