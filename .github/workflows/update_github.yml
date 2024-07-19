@@ -1,0 +1,33 @@
+name: Sync Notion to GitHub
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC; adjust as needed
+
+jobs:
+  sync_notion_to_github:
+    runs-on: ubuntu-latest
+    name: Sync Notion Issues to GitHub
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Sync Notion to GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_ISSUES_DATABASE: ${{ secrets.NOTION_ISSUES_DATABASE }}
+        run: |
+          python update_github_from_notion.py
+
+          
