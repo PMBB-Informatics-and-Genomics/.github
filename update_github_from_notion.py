@@ -33,13 +33,24 @@ def update_github_issue(issue_id, updated_data):
 def post_to_github_from_notion():
     notion_issues = fetch_notion_issues()
     
+    # Debugging: Print out the raw response from Notion
+    print("Notion issues response:", notion_issues)
+    
     for result in notion_issues['results']:
-        issue_id = result['properties']['ID']['multi_select'][0]['name']
-        updated_data = {
-            "title": result['properties']['Repository']['title'][0]['text']['content'],
-            "body": result['properties']['Body']['rich_text'][0]['text']['content'],
-            "state": result['properties']['Status']['select']['name']
-        }
-        update_github_issue(issue_id, updated_data)
+        try:
+            issue_id = result['properties']['ID']['multi_select'][0]['name']
+            title = result['properties']['Repository']['title'][0]['text']['content']
+            body = result['properties']['Body']['rich_text'][0]['text']['content']
+            state = result['properties']['Status']['select']['name']
+            
+            updated_data = {
+                "title": title,
+                "body": body,
+                "state": state
+            }
+            update_github_issue(issue_id, updated_data)
+        
+        except KeyError as e:
+            print(f"KeyError: {e} - {result}")
 
 post_to_github_from_notion()
