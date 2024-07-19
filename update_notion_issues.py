@@ -2,7 +2,7 @@ import os
 import requests
 from datetime import datetime
 
-# Environment variables
+# Environment variable
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 NOTION_ISSUES_DATABASE = os.getenv('NOTION_ISSUES_DATABASE')
