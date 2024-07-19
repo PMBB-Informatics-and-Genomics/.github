@@ -50,8 +50,15 @@ def post_to_github_from_notion():
         try:
             issue_id = result['properties']['ID']['multi_select'][0]['name']
             # title = result['properties']['Repository']['title'][0]['text']['content']
-            body = result['properties']['Body']['rich_text'][0]['text']['content']
-            state = result['properties']['Status']['select']['name'].lower()  # Convert to lowercase
+            body_property = result['properties'].get('Body', {})
+            body_rich_text = body_property.get('rich_text', [])
+            
+            if body_rich_text:
+                body = body_rich_text[0]['text']['content']
+            else:
+                body = "No description provided"
+            
+            state = result['properties'].get('Status', {}).get('select', {}).get('name', 'open').lower()  # Default to 'open'
             
             # Determine GitHub issue number from Notion ID
             github_issue_number = int(issue_id)
@@ -68,5 +75,7 @@ def post_to_github_from_notion():
         
         except KeyError as e:
             print(f"KeyError: {e} - {result}")
+        except IndexError as e:
+            print(f"IndexError: {e} - {result}")
 
 post_to_github_from_notion()
