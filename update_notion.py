@@ -32,9 +32,12 @@ def fetch_repo_contents():
     return response.json()
 
 def get_file_size(file_url):
-    response = requests.get(file_url, headers=github_headers)
-    response.raise_for_status()
-    return len(response.content)
+    try:
+        response = requests.get(file_url, headers=github_headers)
+        response.raise_for_status()
+        return len(response.content)
+    except requests.RequestException:
+        return 0
 
 def post_to_notion(stats, files):
     url = "https://api.notion.com/v1/pages"
@@ -94,6 +97,9 @@ repo_stats = fetch_repo_stats()
 repo_contents = fetch_repo_contents()
 
 # Create a list of file details including their sizes
-file_details = [{'name': item['name'], 'size': get_file_size(item['download_url']) if 'download_url' in item else 0} for item in repo_contents]
+file_details = [
+    {'name': item['name'], 'size': get_file_size(item['download_url']) if 'download_url' in item and item['type'] == 'file' else 0}
+    for item in repo_contents
+]
 
 post_to_notion(repo_stats, file_details)
