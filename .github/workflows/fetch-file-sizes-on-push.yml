@@ -1,0 +1,31 @@
+name: Fetch File Sizes and Update Notion on Push
+
+on:
+  push:
+    branches:
+      - main  # Specify the branch you want to trigger this on, e.g., 'main' or 'master'
+
+jobs:
+  update-notion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Specify the Python version
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          DATABASE_ID: ${{ secrets.DATABASE_ID }}
+        run: |
+          python .github/scripts/fetch_and_post.py
