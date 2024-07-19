@@ -1,8 +1,9 @@
 name: Sync Notion to GitHub
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC; adjust as needed
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger on
 
 jobs:
   sync_notion_to_github:
@@ -29,5 +30,3 @@ jobs:
           NOTION_ISSUES_DATABASE: ${{ secrets.NOTION_ISSUES_DATABASE }}
         run: |
           python update_github_from_notion.py
-
-          
