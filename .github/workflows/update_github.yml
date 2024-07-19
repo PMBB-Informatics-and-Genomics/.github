@@ -23,6 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
+      - name: Debug environment
+        run: |
+          python --version
+          pip list
+
       - name: Sync Notion to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
