@@ -49,7 +49,7 @@ def post_to_github_from_notion():
     for result in notion_issues['results']:
         try:
             issue_id = result['properties']['ID']['multi_select'][0]['name']
-            title = result['properties']['Repository']['title'][0]['text']['content']
+            # title = result['properties']['Repository']['title'][0]['text']['content']
             body = result['properties']['Body']['rich_text'][0]['text']['content']
             state = result['properties']['Status']['select']['name'].lower()  # Convert to lowercase
             
@@ -58,7 +58,7 @@ def post_to_github_from_notion():
             if github_issue_number in github_issue_map:
                 # Update existing GitHub issue
                 updated_data = {
-                    "title": title,
+                    # "title": title,
                     "body": body,
                     "state": state
                 }
