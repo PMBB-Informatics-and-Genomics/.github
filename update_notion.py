@@ -1,7 +1,7 @@
 import os
 import requests
 from datetime import datetime
-
+##corrected code
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 NOTION_TOKEN = os.getenv('NOTION_TOKEN')
 NOTION_REPO_STATS_DATABASE = os.getenv('NOTION_REPO_STATS_DATABASE')
